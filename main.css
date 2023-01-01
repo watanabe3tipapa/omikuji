@@ -1,0 +1,44 @@
+label {
+color: blue;
+font-size: 120px;
+text-align: center;
+display: block;
+}
+
+p {
+font-size: 80px;
+text-align: center;
+display: block;
+}
+
+h1 {
+color: red;
+font-size: 180px;
+text-align: center;
+display: block;
+
+}
+
+a {
+color: #00EEFF;
+text-align: center;
+text-decoration: underline;
+display: block;
+
+}
+
+p.title {
+font-size: 200px;
+text-align: center;
+color: orange;
+display: block;
+
+}
+
+img {
+
+width: 150px;
+height: 150px;
+text-align: center; 
+display: block;
+}
