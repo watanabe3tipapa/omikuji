@@ -1,14 +1,27 @@
-<html>
-　　<head>
-　　<title>おみくじ</title>
-　　</head>
-   <link rel="stylesheet" type="text/css" href="main.css" />
-   <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-   <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-　　<body>
-    <p class="title">おみくじ</p>
-    <py-script src="main.py"></py-script>
-    <label id="result"></label>
-    <a href="https://watanabe3tipapa.github.io/omikuji/">もう一度引く</a>
-   </body>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="おみくじアプリ - あなたの運勢を占います">
+    <title>おみくじ</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
+    
+    <!-- Scripts -->
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+</head>
+<body>
+    <div class="container">
+        <p class="title">おみくじ</p>
+        <py-script src="main.py"></py-script>
+        <label id="result"></label>
+        <a href="https://watanabe3tipapa.github.io/omikuji/" 
+           aria-label="もう一度おみくじを引く">
+            もう一度引く
+        </a>
+    </div>
+</body>
 </html>
