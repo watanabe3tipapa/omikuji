@@ -43,11 +43,15 @@ const fortunes = [
   },
 ];
 
+const maxDraws = 3;
 const drawButton = document.querySelector("#draw-button");
 const redrawButton = document.querySelector("#redraw-button");
 const fortuneCard = document.querySelector("#fortune-card");
 const fortunePrompt = document.querySelector("#fortune-prompt");
 const fortuneResult = document.querySelector("#fortune-result");
+const drawCounter = document.querySelector("#draw-counter");
+const stageNumber = document.querySelector("#stage-number");
+const nightmareOverlay = document.querySelector("#nightmare-overlay");
 
 const fortuneName = document.querySelector("#fortune-name");
 const fortuneNumber = document.querySelector("#fortune-number");
@@ -58,6 +62,8 @@ const luckyDetail = document.querySelector("#lucky-detail");
 
 let drawCount = 0;
 let lastFortuneIndex = -1;
+let nightmareFadeTimer;
+let nightmareResetTimer;
 
 function chooseFortuneIndex() {
   if (fortunes.length === 1) return 0;
@@ -70,8 +76,16 @@ function chooseFortuneIndex() {
   return nextIndex;
 }
 
+function updateDrawCounter() {
+  const remainingDraws = maxDraws - drawCount;
+  drawCounter.textContent = `今宵の抽選　残り ${remainingDraws} 回`;
+}
+
 function fillFortune(fortune, number) {
-  fortuneNumber.textContent = `FORTUNE ${String(number).padStart(2, "0")}`;
+  const formattedNumber = String(number).padStart(2, "0");
+
+  fortuneNumber.textContent = `FORTUNE ${formattedNumber}`;
+  stageNumber.textContent = formattedNumber;
   fortuneName.textContent = fortune.name;
   fortuneReading.innerHTML = fortune.reading.replace("\n", "<br>");
   wishDetail.textContent = fortune.wish;
@@ -79,8 +93,54 @@ function fillFortune(fortune, number) {
   luckyDetail.textContent = fortune.lucky;
 }
 
+function resetFortune() {
+  window.clearTimeout(nightmareFadeTimer);
+  window.clearTimeout(nightmareResetTimer);
+
+  nightmareOverlay.classList.remove("is-visible", "is-fading");
+  nightmareOverlay.hidden = true;
+  nightmareOverlay.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("is-nightmare");
+
+  drawCount = 0;
+  lastFortuneIndex = -1;
+  stageNumber.textContent = "01";
+  fortunePrompt.hidden = false;
+  fortuneResult.hidden = true;
+  fortuneCard.classList.remove("is-drawing", "is-locked");
+  fortuneCard.removeAttribute("aria-busy");
+  updateDrawCounter();
+
+  window.scrollTo({ top: 0, behavior: "auto" });
+  drawButton.focus({ preventScroll: true });
+}
+
+function showNightmare() {
+  if (fortuneCard.classList.contains("is-locked")) return;
+
+  fortuneCard.classList.add("is-locked");
+  nightmareOverlay.hidden = false;
+  nightmareOverlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("is-nightmare");
+
+  window.requestAnimationFrame(() => {
+    nightmareOverlay.classList.add("is-visible");
+  });
+
+  nightmareFadeTimer = window.setTimeout(() => {
+    nightmareOverlay.classList.add("is-fading");
+  }, 4250);
+
+  nightmareResetTimer = window.setTimeout(resetFortune, 5000);
+}
+
 function revealFortune() {
-  if (fortuneCard.classList.contains("is-drawing")) return;
+  if (fortuneCard.classList.contains("is-drawing") || fortuneCard.classList.contains("is-locked")) return;
+
+  if (drawCount >= maxDraws) {
+    showNightmare();
+    return;
+  }
 
   const nextIndex = chooseFortuneIndex();
   const fortune = fortunes[nextIndex];
@@ -96,6 +156,7 @@ function revealFortune() {
     fortuneResult.hidden = false;
     fortuneCard.classList.remove("is-drawing");
     fortuneCard.removeAttribute("aria-busy");
+    updateDrawCounter();
     redrawButton.focus({ preventScroll: true });
   }, 330);
 }

@@ -745,3 +745,178 @@ a:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+.draw-counter {
+  margin: 1.25rem 0 0;
+  color: rgba(235, 228, 212, 0.56);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+}
+
+.draw-counter::before {
+  display: inline-block;
+  width: 0.34rem;
+  height: 0.34rem;
+  margin-right: 0.58rem;
+  border: 1px solid var(--teal);
+  border-radius: 50%;
+  content: "";
+  vertical-align: 0.04em;
+}
+
+.nightmare-overlay {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  background: #060808;
+  transition: opacity 650ms ease;
+}
+
+.nightmare-overlay[hidden] {
+  display: none;
+}
+
+.nightmare-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nightmare-overlay.is-fading {
+  opacity: 0;
+}
+
+.nightmare-overlay > img,
+.nightmare-overlay__veil {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.nightmare-overlay > img {
+  object-fit: cover;
+  opacity: 0.88;
+  filter: saturate(0.72) contrast(1.08);
+  transform: scale(1.035);
+  transition: transform 5s ease-out;
+}
+
+.nightmare-overlay.is-visible > img {
+  transform: scale(1);
+}
+
+.nightmare-overlay__veil {
+  background:
+    linear-gradient(90deg, rgba(4, 8, 8, 0.94) 0%, rgba(4, 8, 8, 0.7) 36%, rgba(4, 8, 8, 0.13) 74%, rgba(4, 8, 8, 0.34) 100%),
+    linear-gradient(0deg, rgba(4, 8, 8, 0.55), transparent 46%, rgba(4, 8, 8, 0.24));
+}
+
+.nightmare-overlay__copy {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 3rem, 68rem);
+  padding: 3rem 0;
+  color: var(--paper);
+  opacity: 0;
+  transform: translateY(1.2rem);
+  transition: opacity 600ms ease 110ms, transform 600ms ease 110ms;
+}
+
+.nightmare-overlay.is-visible .nightmare-overlay__copy {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nightmare-overlay__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 1.25rem;
+  color: #9d6250;
+  font-size: 0.64rem;
+  letter-spacing: 0.23em;
+}
+
+.nightmare-overlay__eyebrow::before {
+  width: 1.8rem;
+  height: 1px;
+  background: #9d6250;
+  content: "";
+}
+
+.nightmare-overlay__copy h2 {
+  max-width: 26rem;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.1em;
+}
+
+.nightmare-overlay__copy > p:not(.nightmare-overlay__eyebrow) {
+  max-width: 31rem;
+  margin: 1.75rem 0 0;
+  color: rgba(235, 228, 212, 0.7);
+  font-family: var(--serif);
+  font-size: clamp(0.83rem, 1.4vw, 1rem);
+  line-height: 2;
+  letter-spacing: 0.08em;
+}
+
+.nightmare-overlay__timer {
+  display: block;
+  width: min(16rem, 72vw);
+  height: 1px;
+  margin-top: 3rem;
+  overflow: hidden;
+  background: rgba(235, 228, 212, 0.24);
+}
+
+.nightmare-overlay__timer::after {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--teal);
+  content: "";
+  transform-origin: left center;
+}
+
+.nightmare-overlay.is-visible .nightmare-overlay__timer::after {
+  animation: nightmare-countdown 5s linear both;
+}
+
+@keyframes nightmare-countdown {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+body.is-nightmare {
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .draw-counter {
+    margin-top: 1rem;
+  }
+
+  .nightmare-overlay__copy {
+    width: min(100% - 2.5rem, 68rem);
+    padding-top: 8rem;
+  }
+
+  .nightmare-overlay__veil {
+    background:
+      linear-gradient(0deg, rgba(4, 8, 8, 0.86) 0%, rgba(4, 8, 8, 0.62) 43%, rgba(4, 8, 8, 0.13) 100%),
+      linear-gradient(90deg, rgba(4, 8, 8, 0.36), rgba(4, 8, 8, 0.25));
+  }
+}

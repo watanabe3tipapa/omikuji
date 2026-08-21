@@ -50,12 +50,13 @@
             <span>心静かに</span>
             <span>運をひらく</span>
           </div>
+          <p class="draw-counter" id="draw-counter" aria-live="polite">今宵の抽選　残り 3 回</p>
         </div>
 
         <div class="fortune-stage" aria-describedby="fortune-instruction">
           <div class="stage-corner stage-corner--top" aria-hidden="true"></div>
           <div class="stage-corner stage-corner--bottom" aria-hidden="true"></div>
-          <p class="stage-label">OMIKUJI <span>01</span></p>
+          <p class="stage-label">OMIKUJI <span id="stage-number">01</span></p>
 
           <div class="fortune-card" id="fortune-card">
             <div class="fortune-card__front" id="fortune-prompt">
@@ -111,5 +112,16 @@
         <a href="#page-title">上へ戻る <span aria-hidden="true">↑</span></a>
       </footer>
     </main>
+
+    <section class="nightmare-overlay" id="nightmare-overlay" aria-live="assertive" aria-atomic="true" aria-hidden="true" hidden>
+      <img src="nightmare-omikuji.jpg" alt="" />
+      <div class="nightmare-overlay__veil" aria-hidden="true"></div>
+      <div class="nightmare-overlay__copy">
+        <p class="nightmare-overlay__eyebrow">THE FOURTH DRAW</p>
+        <h2>夜は、ここまでです。</h2>
+        <p>引きすぎたおみくじは、夢の底へほどけていきます。</p>
+        <span class="nightmare-overlay__timer" aria-hidden="true"></span>
+      </div>
+    </section>
   </body>
 </html>
