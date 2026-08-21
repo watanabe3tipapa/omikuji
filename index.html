@@ -1,35 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="夜の静けさのなかで、今日のしるしをひらくおみくじ。"
+    />
+    <meta name="theme-color" content="#0d1111" />
+    <title>月夜のおみくじ — 今日のしるしをひらく</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="おみくじアプリ - あなたの運勢を占います">
-    <title>おみくじ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="main.css" />
+    <script src="main.js" defer></script>
+  </head>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap"
-        rel="stylesheet">
+  <body>
+    <div class="page-grid" aria-hidden="true"></div>
+    <div class="moon-glow moon-glow--large" aria-hidden="true"></div>
+    <div class="moon-glow moon-glow--small" aria-hidden="true"></div>
 
-    <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="main.css">
-    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
-
-    <!-- Scripts -->
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-</head>
-
-<body>
-    <div class="container">
-        <p class="title">おみくじ</p>
-        <py-script src="main.py"></py-script>
-        <label id="result"></label>
-        <a href="https://watanabe3tipapa.github.io/omikuji/" aria-label="もう一度おみくじを引く">
-            もう一度引く
+    <main class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="./" aria-label="月夜のおみくじ トップへ">
+          <span class="brand-mark" aria-hidden="true"><i></i></span>
+          <span class="brand-text">
+            <span>月夜のおみくじ</span>
+            <small>TSUKIYO NO OMIKUJI</small>
+          </span>
         </a>
-    </div>
-</body>
+        <p class="header-note">今夜、ひとつのしるしを。</p>
+      </header>
 
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> FORTUNE FOR THIS MOMENT</p>
+          <h1 id="page-title">今日の流れを、<br /><em>そっとひらく。</em></h1>
+          <p class="intro">
+            迷いのなかにいるときも、軽やかに進みたいときも。<br />
+            いまのあなたへ、小さな言葉を届けます。
+          </p>
+          <div class="hero-meta" aria-label="おみくじの案内">
+            <span>一日一会</span>
+            <span>心静かに</span>
+            <span>運をひらく</span>
+          </div>
+        </div>
+
+        <div class="fortune-stage" aria-describedby="fortune-instruction">
+          <div class="stage-corner stage-corner--top" aria-hidden="true"></div>
+          <div class="stage-corner stage-corner--bottom" aria-hidden="true"></div>
+          <p class="stage-label">OMIKUJI <span>01</span></p>
+
+          <div class="fortune-card" id="fortune-card">
+            <div class="fortune-card__front" id="fortune-prompt">
+              <p class="fortune-kicker">今宵のしるし</p>
+              <p class="fortune-question">深く息をして、<br />運をひらいてください。</p>
+              <button class="draw-button" id="draw-button" type="button">
+                <span>おみくじを引く</span>
+                <span class="button-arrow" aria-hidden="true">→</span>
+              </button>
+              <p class="instruction" id="fortune-instruction">ボタンを押すと、今日の運勢が現れます。</p>
+            </div>
+
+            <article class="fortune-card__result" id="fortune-result" aria-live="polite" aria-atomic="true" hidden>
+              <p class="fortune-kicker" id="fortune-number">FORTUNE 01</p>
+              <p class="fortune-name" id="fortune-name">大吉</p>
+              <p class="fortune-reading" id="fortune-reading"></p>
+              <dl class="fortune-details">
+                <div>
+                  <dt>願いごと</dt>
+                  <dd id="wish-detail"></dd>
+                </div>
+                <div>
+                  <dt>ひととの縁</dt>
+                  <dd id="relationship-detail"></dd>
+                </div>
+                <div>
+                  <dt>開運のしるし</dt>
+                  <dd id="lucky-detail"></dd>
+                </div>
+              </dl>
+              <button class="draw-button draw-button--quiet" id="redraw-button" type="button">
+                <span>もう一度ひらく</span>
+                <span class="button-arrow" aria-hidden="true">→</span>
+              </button>
+            </article>
+          </div>
+
+          <p class="stage-footnote"><span aria-hidden="true">◌</span> いま、この瞬間のことば</p>
+        </div>
+      </section>
+
+      <section class="ritual" aria-labelledby="ritual-title">
+        <p class="eyebrow"><span></span> A QUIET RITUAL</p>
+        <h2 id="ritual-title">言葉は、進むための灯り。</h2>
+        <p>
+          おみくじは未来を決めるものではなく、心を見つめるための小さなきっかけです。<br />
+          手元に残った言葉を、今日の歩幅にしてください。
+        </p>
+      </section>
+
+      <footer class="site-footer">
+        <p>月夜のおみくじ <span aria-hidden="true">—</span> A small sign for your day.</p>
+        <a href="#page-title">上へ戻る <span aria-hidden="true">↑</span></a>
+      </footer>
+    </main>
+  </body>
 </html>
