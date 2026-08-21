@@ -99,6 +99,13 @@ omikuji/
 | モバイル表示 | 900px以下で一列、640px以下で間隔・文字・カードを最適化 |
 | 色の役割 | 運勢や操作の識別を色だけに依存せず、文言と構造を併用 |
 
+## ドキュメント
+
+| ドキュメント | 内容 |
+| --- | --- |
+| [抽選・悪夢演出仕様](docs/INTERACTION-SPEC.md) | 三回制限、四回目の悪夢演出、五秒後の初期化、アクセシビリティ、確認手順 |
+| [更新履歴](CHANGELOG.md) | v0.3.0の機能・デザイン・実装に関する更新内容 |
+
 ## 公開
 
 `main` ブランチへ変更を反映すると、[GitHub Actions](.github/workflows/deploy.yml) がGitHub Pagesへデプロイします。リポジトリの **Settings → Pages** では、公開元を **GitHub Actions** に設定してください。
