@@ -790,6 +790,18 @@ a:focus-visible {
   opacity: 0;
 }
 
+.nightmare-overlay.is-blank {
+  opacity: 1;
+  pointer-events: auto;
+  background: #000;
+}
+
+.nightmare-overlay.is-blank > img,
+.nightmare-overlay.is-blank .nightmare-overlay__veil,
+.nightmare-overlay.is-blank .nightmare-overlay__copy {
+  visibility: hidden;
+}
+
 .nightmare-overlay > img,
 .nightmare-overlay__veil {
   position: absolute;
@@ -803,7 +815,7 @@ a:focus-visible {
   opacity: 0.88;
   filter: saturate(0.72) contrast(1.08);
   transform: scale(1.035);
-  transition: transform 5s ease-out;
+  transition: transform 7s ease-out;
 }
 
 .nightmare-overlay.is-visible > img {
@@ -888,7 +900,7 @@ a:focus-visible {
 }
 
 .nightmare-overlay.is-visible .nightmare-overlay__timer::after {
-  animation: nightmare-countdown 5s linear both;
+  animation: nightmare-countdown 7s linear both;
 }
 
 @keyframes nightmare-countdown {

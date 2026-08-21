@@ -64,6 +64,7 @@ let drawCount = 0;
 let lastFortuneIndex = -1;
 let nightmareFadeTimer;
 let nightmareResetTimer;
+let nightmareBlankTimer;
 
 function chooseFortuneIndex() {
   if (fortunes.length === 1) return 0;
@@ -96,8 +97,9 @@ function fillFortune(fortune, number) {
 function resetFortune() {
   window.clearTimeout(nightmareFadeTimer);
   window.clearTimeout(nightmareResetTimer);
+  window.clearTimeout(nightmareBlankTimer);
 
-  nightmareOverlay.classList.remove("is-visible", "is-fading");
+  nightmareOverlay.classList.remove("is-visible", "is-fading", "is-blank");
   nightmareOverlay.hidden = true;
   nightmareOverlay.setAttribute("aria-hidden", "true");
   document.body.classList.remove("is-nightmare");
@@ -115,6 +117,17 @@ function resetFortune() {
   drawButton.focus({ preventScroll: true });
 }
 
+function showBlankInterval() {
+  window.clearTimeout(nightmareFadeTimer);
+  window.clearTimeout(nightmareResetTimer);
+
+  nightmareOverlay.classList.remove("is-visible", "is-fading");
+  nightmareOverlay.classList.add("is-blank");
+  nightmareOverlay.setAttribute("aria-hidden", "true");
+
+  nightmareBlankTimer = window.setTimeout(resetFortune, 3000);
+}
+
 function showNightmare() {
   if (fortuneCard.classList.contains("is-locked")) return;
 
@@ -129,9 +142,9 @@ function showNightmare() {
 
   nightmareFadeTimer = window.setTimeout(() => {
     nightmareOverlay.classList.add("is-fading");
-  }, 4250);
+  }, 6250);
 
-  nightmareResetTimer = window.setTimeout(resetFortune, 5000);
+  nightmareResetTimer = window.setTimeout(showBlankInterval, 7000);
 }
 
 function revealFortune() {
